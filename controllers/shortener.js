@@ -9,10 +9,9 @@ const shorten = async (request, reply) => {
   try {
     let shortUrl
     const existingUrl = await Url
-      .findOne({ longUrl: url })
+      .findOne({ url })
       .select({
         id: 1,
-        shortUrl: 1,
       })
       .exec()
 
@@ -20,8 +19,7 @@ const shorten = async (request, reply) => {
 
     if (!existingUrl) {
       const _url = new Url()
-      _url.longUrl = url
-      _url.shortUrl = shortUrl
+      _url.url = url
       await _url.save()
 
       shortUrl = _url.id
@@ -37,12 +35,23 @@ const shorten = async (request, reply) => {
 
 }
 
-const getUrl = (request, reply) => {
-  const { shortUrl } = request.params
+const getUrl = async (request, reply) => {
+  const { key } = request.params
 
-  console.log(shortUrl)
+  try {
+    let shortUrl
+    const existingUrl = await Url
+      .findById(key)
+      .select({ url: 1 })
+      .exec()
 
-  return reply({ url: shortUrl })
+    console.log('existingUrl: ', existingUrl)
+
+    return reply({ url: existingUrl ? existingUrl.url : '' })
+  } catch (error) {
+    console.log('shorten.error: ', error)
+    return reply(Boom.wrap(new Error('Internal Server Error'), 500))
+  }
 }
 
 module.exports = {

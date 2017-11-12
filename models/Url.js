@@ -12,16 +12,16 @@ const createSchema = () => {
   const Schema = mongoose.Schema
   const schema = new Schema(
     {
-      longUrl: {
+      url: {
         type: String,
         required: true,
         unique: true,
       },
-      shortUrl: {
-        type: String,
-        required: true,
-        unique: true,
-      },
+      // shortUrl: {
+      //   type: String,
+      //   // required: true,
+      //   unique: true,
+      // },
     },
     {
       timestamps: true
