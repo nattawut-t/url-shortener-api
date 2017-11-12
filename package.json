@@ -1,0 +1,27 @@
+{
+  "name": "url-shortener-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node_modules/.bin/nodemon server",
+    "dev": "node_modules/.bin/nodemon server --exec 'npm run lint && node'",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "babel-eslint": "^8.0.0",
+    "boom": "^5.2.0",
+    "dotenv": "^4.0.0",
+    "eslint": "^4.7.2",
+    "eslint-config-hapi": "^10.1.0",
+    "eslint-plugin-hapi": "^4.0.0",
+    "fs": "^0.0.1-security",
+    "hapi": "^16.6.0",
+    "hapi-auth-jwt2": "^7.3.0",
+    "hapi-swagger": "^7.8.1",
+    "inert": "^4.2.1",
+    "lodash": "^4.17.4",
+    "nodemon": "^1.12.1",
+    "vision": "^4.1.1"
+  }
+}
