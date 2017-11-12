@@ -1,5 +1,7 @@
 require('dotenv').config()
 
+const mongoose = require('mongoose')
+
 const Hapi = require('hapi')
 const Inert = require('inert')
 const Vision = require('vision')
@@ -10,8 +12,10 @@ const _ = require('lodash')
 const Boom = require('boom')
 
 const Pack = require('./package')
-const { port, host, secretKey } = require('./configs')
+const { port, host, secretKey, mongoUrl } = require('./configs')
 const server = new Hapi.Server()
+
+mongoose.Promise = require('bluebird')
 
 server.connection({
   host,
@@ -75,6 +79,14 @@ server.register([
         })
 
       })
+
+    if (mongoose.connection.readyState === 0) {
+      try {
+        mongoose.connect(mongoUrl)
+      } catch (error) {
+        console.log('mongoose connect failed: ', error)
+      }
+    }
 
     server.start(err => {
       if (err) {
