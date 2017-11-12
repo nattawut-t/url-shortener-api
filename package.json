@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "babel-eslint": "^8.0.0",
+    "bluebird": "^3.5.1",
     "boom": "^5.2.0",
     "dotenv": "^4.0.0",
     "eslint": "^4.7.2",
@@ -21,6 +22,7 @@
     "hapi-swagger": "^7.8.1",
     "inert": "^4.2.1",
     "lodash": "^4.17.4",
+    "mongoose": "^4.13.1",
     "nodemon": "^1.12.1",
     "vision": "^4.1.1"
   }
