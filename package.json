@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "author": "Nattawut Tammaratmetee <1203ball@gmail.com>",
   "scripts": {
     "start": "node_modules/.bin/nodemon server",
     "dev": "node_modules/.bin/nodemon server --exec 'npm run lint && node'",
