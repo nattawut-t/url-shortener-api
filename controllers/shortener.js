@@ -36,13 +36,13 @@ const shorten = async (request, reply) => {
 }
 
 const getUrl = async (request, reply) => {
-  const { key } = request.params
+  const { id } = request.params
 
   try {
-    let id = from(key)
+    let _id = from(id)
 
     const existing = await Url
-      .findOne({ id })
+      .findOne({ id: _id })
       .select({ url: 1 })
       .exec()
 

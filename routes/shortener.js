@@ -17,14 +17,14 @@ module.exports = [
   },
   {
     method: 'GET',
-    path: '/api/url/shorten/{key}',
+    path: '/api/url/shorten/{id}',
     config: {
       handler: getUrl,
       description: 'Get mapped url from short URL',
       tags: ['api'],
       validate: {
         params: {
-          key: getUrlParams,
+          id: getUrlParams,
         },
       },
       cors: true,
