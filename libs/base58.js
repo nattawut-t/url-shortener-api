@@ -1,5 +1,6 @@
 const alphabet = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ'
 const base = alphabet.length // base is the length of the alphabet (58 in this case)
+const range = 10000
 
 // utility function to convert base 10 integer to base 58 string
 const encode = value => {
@@ -30,16 +31,16 @@ const decode = value => {
   return decoded
 }
 
-// const from = value => {
-//   let _value = decode(value)
-//   return (_value -= 10000)
-// }
+const from = value => {
+  let _value = decode(value)
+  return (_value -= range)
+}
 
-// const to = value => encode(value += 10000)
+const to = value => encode(value += range)
 
 module.exports = {
   encode,
   decode,
-  // from,
-  // to,
+  from,
+  to,
 }

@@ -26,7 +26,7 @@ const shorten = async (request, reply) => {
       id = existing.id
     }
 
-    id = encode(id += 10000)
+    id = to(id)
 
     return reply({ url: id })
   } catch (error) {
@@ -39,19 +39,12 @@ const getUrl = async (request, reply) => {
   const { key } = request.params
 
   try {
-    let id = 0
-
-    if (key) {
-      id = decode(key)
-      id -= 10000
-    }
+    let id = from(key)
 
     const existing = await Url
       .findOne({ id })
       .select({ url: 1 })
       .exec()
-
-    console.log('existing: ', existing)
 
     return reply({ url: existing ? existing.url : '' })
   } catch (error) {
