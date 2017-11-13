@@ -6,6 +6,7 @@ module.exports = [
     method: 'POST',
     path: '/api/url/shorten',
     config: {
+      auth: 'jwt',
       handler: shorten,
       description: 'Shorten URL',
       tags: ['api'],
