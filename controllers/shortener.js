@@ -1,5 +1,6 @@
 const Boom = require('boom')
 const Url = require('../models/url')()
+const { encode, decode, from, to } = require('../libs/base58')
 
 const shorten = async (request, reply) => {
   const { payload: { url } } = request
@@ -7,47 +8,52 @@ const shorten = async (request, reply) => {
   console.log(url)
 
   try {
-    let shortUrl
-    const existingUrl = await Url
+    let id = 0
+    const existing = await Url
       .findOne({ url })
       .select({
         id: 1,
       })
       .exec()
 
-    console.log('existingUrl: ', existingUrl)
-
-    if (!existingUrl) {
+    if (!existing) {
       const _url = new Url()
       _url.url = url
       await _url.save()
 
-      shortUrl = _url.id
+      id = _url.id
     } else {
-      shortUrl = existingUrl.id
+      id = existing.id
     }
 
-    return reply({ url: shortUrl })
+    id = encode(id += 10000)
+
+    return reply({ url: id })
   } catch (error) {
     console.log('shorten.error: ', error)
     return reply(Boom.wrap(new Error('Internal Server Error'), 500))
   }
-
 }
 
 const getUrl = async (request, reply) => {
   const { key } = request.params
 
   try {
-    let shortUrl
-    const existingUrl = await Url
-      .findById(key)
+    let id = 0
+
+    if (key) {
+      id = decode(key)
+      id -= 10000
+    }
+
+    const existing = await Url
+      .findOne({ id })
       .select({ url: 1 })
       .exec()
 
-    console.log('existingUrl: ', existingUrl)
+    console.log('existing: ', existing)
 
-    return reply({ url: existingUrl ? existingUrl.url : '' })
+    return reply({ url: existing ? existing.url : '' })
   } catch (error) {
     console.log('shorten.error: ', error)
     return reply(Boom.wrap(new Error('Internal Server Error'), 500))

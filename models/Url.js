@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const AutoIncrement = require('mongoose-sequence')(mongoose)
 let schema
 
 function Url() {
@@ -17,16 +18,11 @@ const createSchema = () => {
         required: true,
         unique: true,
       },
-      // shortUrl: {
-      //   type: String,
-      //   // required: true,
-      //   unique: true,
-      // },
     },
     {
       timestamps: true
     })
-
+  schema.plugin(AutoIncrement, { inc_field: 'id' })
   return schema
 }
 
